@@ -51,6 +51,7 @@
         "src/Bullet.js",
         "src/EnemyType.js",
         "src/Enemy.js",
-        "src/Explosion.js"
+        "src/Explosion.js",
+        "src/GameOver.js"
     ]
 }

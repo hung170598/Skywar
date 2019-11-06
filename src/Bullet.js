@@ -19,8 +19,10 @@ var Bullet = cc.Sprite.extend({
             this.destroy();
         }
         else{
-            this.x = x + this.xVel * dt;
-            this.y = y + this.yVel * dt;
+            if(this.attackMode == MW.ENEMY_ATTACK_MODE.NORMAL){
+                this.x = x + this.xVel * dt;
+                this.y = y + this.yVel * dt;
+            }
         }
     },
     destroy:function(){
@@ -82,11 +84,11 @@ Bullet.preset = function(){
         bullet.visible = false;
         bullet.active = false;
     }
-    //for (var i = 0; i < 20; i++) {
-    //    var bullet = Bullet.create("play/Player 1-dan 1.png", MW.ENEMY_ATTACK_MODE.NORMAL, 3000, MW.UNIT_TAG.ENEMY_BULLET);
-    //    bullet.visible = false;
-    //    bullet.active = false;
-    //}
+    for (var i = 0; i < 20; i++) {
+        var bullet = Bullet.create("play/enemy - A2 - dan.png", MW.ENEMY_ATTACK_MODE.NORMAL, 3000, MW.UNIT_TAG.ENEMY_BULLET);
+        bullet.visible = false;
+        bullet.active = false;
+    }
 };
 
 

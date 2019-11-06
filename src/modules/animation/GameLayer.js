@@ -51,6 +51,7 @@ var GameLayer = cc.Layer.extend({
         this.addChild(this._sparkBatch);
 
         this.lbScore = new cc.LabelBMFont("Score: 0", "play/arial-14.fnt");
+
         this.lbScore.attr({
             anchorX: 1,
             anchorY: 0,
@@ -119,7 +120,7 @@ var GameLayer = cc.Layer.extend({
         Enemy.preset();
 
         this.scheduleUpdate();
-        this.schedule(this.bornEnemy, 0.5);
+        this.schedule(this.bornEnemy, 0.2);
 
 
     },
@@ -193,11 +194,15 @@ var GameLayer = cc.Layer.extend({
     },
     checkGameOver: function(){
         if(MW.LIFE <= 0){
-            this.onGameOver();
+            this._state = STATE_GAMEOVER;
+            this.runAction(cc.sequence(
+                cc.delayTime(2),
+                cc.callFunc(this.onGameOver, this)
+            ));
         }
     },
     onGameOver: function(){
-        fr.view(ScreenSkywar,0.1);
+        fr.view(GameOver);
     },
     updateUI: function(){
         this._lbLife.setString(this.ship.HP + '');
@@ -207,9 +212,5 @@ var GameLayer = cc.Layer.extend({
 
 GameLayer.prototype.addExplosions = function (explosion) {
     this._explosions.addChild(explosion);
-};
-
-GameLayer.prototype.addBullet = function (bullet, zOrder, mode) {
-    this._texOpaqueBatch.addChild(bullet, zOrder, mode);
 };
 

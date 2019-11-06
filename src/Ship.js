@@ -34,6 +34,7 @@ var Ship = cc.Sprite.extend({
     },
 
     shoot: function (dt) {
+        if(this.active == false) return;
         var bullet = Bullet.getOrCreateBullet("play/Player 1-dan 1.png", MW.ENEMY_ATTACK_MODE.NORMAL, 3000, MW.UNIT_TAG.PLAYER_BULLET);
         bullet.x = this.x;
         bullet.y = this.y + this.height/2;

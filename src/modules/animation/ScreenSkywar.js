@@ -22,6 +22,7 @@ var ScreenSkywar = cc.Layer.extend({
 
         var btnCampaign = new ccui.Button("Screen/button1-1.png", "Screen/button1-2.png");
         btnCampaign.setPosition(size.width/2, size.height/2);
+        cc.log(btnCampaign.getSize().height);
         btnCampaign.setScale(1.5);
         btnCampaign.addClickEventListener(this.onSelectCampaign.bind(this));
         this.addChild(btnCampaign);
