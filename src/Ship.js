@@ -9,11 +9,10 @@ var Ship = cc.Sprite.extend({
     zOrder:3000,
     active: true,
     maxBulletPowerValue:4,
-    appearPosition:cc.p(200, 200),
 
     ctor:function(){
         this._super("play/Player 1-1.png");
-        this.setPosition(this.appearPosition.x, this.appearPosition.y);
+        this.setPosition(MW.WIDTH/2, MW.HEIGHT/2);
         this.scheduleUpdate();
         this.schedule(this.shoot, 1/8);
     },

@@ -41,7 +41,14 @@ var Enemy = cc.Sprite.extend({
         }
     },
     destroy:function(){
-        if(this.HP <= 0) MW.SCORE += this.scoreValue;
+        if(this.HP <= 0 && this.active == true) {
+            MW.SCORE += this.scoreValue;
+            var a = Explosion.getOrCreateExplosion();
+            a.attr({
+                x: this.x,
+                y: this.y
+            });
+        }
         this.visible = false;
         this.active = false;
         this.unschedule(this.shoot);

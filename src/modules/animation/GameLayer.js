@@ -11,13 +11,14 @@ PLAYER_CENTER_HEIGHT = 40;
 var GameLayer = cc.Layer.extend({
     background: null,
     isMouseDown: false,
-    _beginPos: 0,
+    _lbLife: null,
     _state:STATE_PLAYING,
     _texTransparentBatch:null,
     _texOpaqueBatch:null,
     _sparkBatch: null,
     ship:null,
-
+    lbScore:null,
+    _explosions:null,
 
     ctor:function(){
         this._super();
@@ -40,6 +41,32 @@ var GameLayer = cc.Layer.extend({
 
 
         var size = cc.director.getVisibleSize();
+        winSize = cc.director.getVisibleSize();
+
+        var texOpaque = cc.textureCache.addImage("play/textureOpaquePack.png");
+        this._texOpaqueBatch = new cc.SpriteBatchNode(texOpaque);
+        this._sparkBatch = new cc.SpriteBatchNode(texOpaque);
+        if(cc.sys.isNative) this._sparkBatch.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
+        this.addChild(this._texOpaqueBatch);
+        this.addChild(this._sparkBatch);
+
+        this.lbScore = new cc.LabelBMFont("Score: 0", "play/arial-14.fnt");
+        this.lbScore.attr({
+            anchorX: 1,
+            anchorY: 0,
+            x: winSize.width - 5,
+            y: winSize.height - 30,
+            scale: MW.SCALE
+        });
+        this.lbScore.textAlign = cc.TEXT_ALIGNMENT_RIGHT;
+        this.addChild(this.lbScore, 1000);
+
+
+        this._lbLife = new cc.LabelTTF("0", "Arial", 20);
+        this._lbLife.x = 60;
+        this._lbLife.y = MW.HEIGHT - 25;
+        this._lbLife.color = cc.color(255, 0, 0);
+        this.addChild(this._lbLife, 1000);
 
         this.background = new cc.Sprite("Screen/map-green.png");
         this.background.setPosition(size.width/2, size.height/2);
@@ -48,6 +75,13 @@ var GameLayer = cc.Layer.extend({
         this.ship = new Ship();
         this.ship.setScale(2/3);
         this.addChild(this.ship, this.ship.zOrder, MW.UNIT_TAG.PLAYER);
+
+        cc.spriteFrameCache.addSpriteFrames("play/explosion.plist");
+        var explosionTexture = cc.textureCache.addImage("play/explosion.png");
+        this._explosions = new cc.SpriteBatchNode(explosionTexture);
+        this._explosions.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
+        this.addChild(this._explosions);
+        Explosion.sharedExplosion();
 
         if (cc.sys.capabilities.hasOwnProperty('keyboard'))
             cc.eventManager.addListener({
@@ -105,6 +139,7 @@ var GameLayer = cc.Layer.extend({
         if (this._state == STATE_PLAYING) {
             this.checkIsCollide();
             this.checkGameOver();
+            this.updateUI();
         }
     },
     checkIsCollide: function() {
@@ -163,6 +198,18 @@ var GameLayer = cc.Layer.extend({
     },
     onGameOver: function(){
         fr.view(ScreenSkywar,0.1);
+    },
+    updateUI: function(){
+        this._lbLife.setString(this.ship.HP + '');
+        this.lbScore.setString("Score: " + MW.SCORE);
     }
 });
+
+GameLayer.prototype.addExplosions = function (explosion) {
+    this._explosions.addChild(explosion);
+};
+
+GameLayer.prototype.addBullet = function (bullet, zOrder, mode) {
+    this._texOpaqueBatch.addChild(bullet, zOrder, mode);
+};
 

@@ -83,5 +83,11 @@ var g_resources = [
     "play/textureOpaquePack.png",
     "play/enemy - A1.png",
     "play/enemy - A2.png",
-    "play/enemy - A2 - dan.png"
+    "play/enemy - A2 - dan.png",
+    "play/arial-14.fnt",
+    "play/arial-15.png",
+    "play/explosion.plist",
+    "play/explosion.png",
+    "play/textureOpaquePack.plist",
+    "play/textureOpaquePack.png"
 ];

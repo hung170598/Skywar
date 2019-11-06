@@ -7,7 +7,7 @@ var EnemyType = [
         moveType: MW.ENEMY_MOVE_TYPE.NORMAL,
         attackMode: MW.ENEMY_ATTACK_MODE.NORMAL,
         scoreValue: 10,
-        speed:150,
+        speed:300,
         bulletSpeed:400
     },
     {
@@ -17,7 +17,7 @@ var EnemyType = [
         HP: 10,
         moveType: MW.ENEMY_MOVE_TYPE.NORMAL,
         attackMode: MW.ENEMY_ATTACK_MODE.NORMAL,
-        scoreValue: 10,
+        scoreValue: 30,
         speed:200,
         bulletSpeed:400
     }
